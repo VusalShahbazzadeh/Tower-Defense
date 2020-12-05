@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,21 +10,29 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //Game is unpaused
         Pause(false);
+        //Singleton
         Instance = this;
     }
 
+    //Setting timescale to 0 is paused and to 1 if it is unpaused
     public void Pause(bool pause)
     {
         Time.timeScale = pause ? 0 : 1;
     }
 
+    //GameOver 
     public static void GameOver()
     {
+        //Game Over Panel is activated
         Instance.GameOverPanel.SetActive(true);
+        //Game is paused
         Instance.Pause(true);
+        //Number of totalKilled and last wave index is shown
         Instance.TotalKilled.text = ""+ BattleManagement.EnemiesKilled;
         Instance.Wave.text = "" + WaveManager.CurrentWave;
+        //CallBack
         OnGameOver();
     }
 

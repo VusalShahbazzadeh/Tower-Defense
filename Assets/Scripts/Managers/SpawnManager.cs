@@ -1,25 +1,26 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    Transform[] SpawnPoints;
-    [SerializeField]
-    GameObject Prefab;
+    Transform[] SpawnPoints; //SpawnPoints which also holds Path
+    public GameObject Prefab;
     [SerializeField]
     float SpawnRate;//Time which is waited inbetween spawning prefabs
-    public static SpawnManager Instance;
+    public static SpawnManager Instance; //singleton instance
     [SerializeField]
-    GameObject[] BlankSpaces;
+    GameObject[] BlankSpaces;// Reference to Spaces where towers can be added
     private void Start()
     {
+        //Making SpawnManager singleton
         Instance = this;
     }
 
+    //Game Loop is started
     public void StartWaves()
     {
+        //Blank spaces are disabled so new towers can't be added
         foreach (GameObject go in BlankSpaces)
         {
             if (go != null)
@@ -27,9 +28,11 @@ public class SpawnManager : MonoBehaviour
                 go.GetComponent<Button>().interactable = false;
             }
         }
+        //New wave is started
         WaveManager.StartNewWave();
     }
 
+    //Enemies are spawned in coroutine so they instantiate after each other and there are distance between them
     public void SpawnEnemies(int NumberOfEnemies) => StartCoroutine(SpawnEnemiesCor(NumberOfEnemies));
 
     public IEnumerator SpawnEnemiesCor(int NumberOfEnemies)

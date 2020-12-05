@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Placeholder UI to represent place where towers might be placed
 public class BlankSpace : MonoBehaviour
 {
     [SerializeField]
@@ -13,16 +14,25 @@ public class BlankSpace : MonoBehaviour
 
     private void Start()
     {
+        //TowerOptions are made singleton
+        //It can't be done in TowerOptions class itself as in the start it is disabled
         if(TowerOptions.Instance == null)
             TowerOptions.Instance = TowerOptions;
     }
 
+    //When a new tower is requested
     public void AddTower()
     {
+        //Checks if there are enough gold available
         if(Cost<= ResourceManagement.Gold)
         {
+            //If yes cost is subtracted from gold
             ResourceManagement.Gold -= Cost;
-            TowerOptions.Towers.Add(Instantiate(TowerPrefab,transform.position,transform.rotation, transform.parent).GetComponent<Tower>());
+            //A new tower is instantiated at the place of this current placeholder 
+            Tower tower = Instantiate(TowerPrefab, transform.position, transform.rotation, transform.parent).GetComponent<Tower>();
+            //and added to a list holding all tower references
+            TowerOptions.Towers.Add(tower);
+            //Current placeholder is destroyed
             Destroy(gameObject);
         }
     }

@@ -6,6 +6,8 @@ public class BattleManagement : MonoBehaviour
 {
     public static List<Enemy> Enemies;
     public static int EnemiesKilled=0;
+
+    //Each time Enemy list and number of killed enemies are refreshed
     private void Awake()
     {
         Enemies = new List<Enemy>();
@@ -27,7 +29,10 @@ public class BattleManagement : MonoBehaviour
     }
 }
 
-//An abstract class holding Health, Attack damage, and Reward given after destroying
+/// <summary>
+/// All Classes that are more or less enroll in battles are derived from BattleUnit class, this class holds level, Health, Attack Damage, Reward when it is destroyed and working range(Trigger distance).
+///Also Virtual callbacks when BattleUnit is attacked or its health is lower than 0
+/// </summary>
 public abstract class BattleUnit : MonoBehaviour
 {
     public int Level;

@@ -9,15 +9,18 @@ public class Tower : BattleUnit
     public float FireRate;//Time which is waited inbetween firing
     private void Start()
     {
-        StartCoroutine(workOfTower());
-        GetComponent<Button>().onClick.AddListener(ShowOptions) ;
+        GetComponent<Button>().onClick.AddListener(ShowOptions) ;//When pressed on tower towerOptions will shop up
     }
 
+    public void StartTower() => StartCoroutine(workOfTower()); // Towers StartToWork
     IEnumerator workOfTower()
     {
+        //WorldSpace position of tower is calculated
         Vector3 position = GetComponent<RectTransform>().transform.position;
         position = Camera.main.ScreenToWorldPoint(position);
         position -= Vector3.forward * position.z;
+
+        //Work loop
         while (true)
         {
             //Finding enemie which is enough close to trigger tower
@@ -28,6 +31,7 @@ public class Tower : BattleUnit
             {
                 BattleManagement.Attack(this, temp, out Reward);
                 ResourceManagement.Gold += Reward;
+                //If reward is higher than zero it means enemy was killed
                 if (Reward > 0)
                 {
                     BattleManagement.EnemiesKilled++;
@@ -40,7 +44,9 @@ public class Tower : BattleUnit
 
     private void ShowOptions()
     {
+        //Passing reference of this tower to TowerOptions
         TowerOptions.Instance.Tower = this;
+        //Showing TowerOptions panel
         TowerOptions.Instance.gameObject.SetActive(true);
     }
 }
