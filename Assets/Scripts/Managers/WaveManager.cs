@@ -5,6 +5,11 @@ using UnityEngine;
 public class WaveManager:MonoBehaviour
 {
     public static int CurrentWave=0;
+
+    private void Start()
+    {
+        CurrentWave = 0;
+    }
     public static void StartNewWave()
     {
         CurrentWave++;

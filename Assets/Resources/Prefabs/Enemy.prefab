@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb293d33b60278418d9d1fb99b390c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  Health: 100
+  Level: 0
+  MaxHealth: 20
+  Health: 20
   Damage: 50
   Reward: 10
   TriggerDistance: 0.1

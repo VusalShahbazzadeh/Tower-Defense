@@ -42,7 +42,6 @@ public class Enemy : BattleUnit
     public override void OnDestroyed()
     {
         BattleManagement.Enemies.Remove(this);
-
         if (BattleManagement.Enemies.Count == 0)
             WaveManager.StartNewWave();
         Destroy(gameObject);

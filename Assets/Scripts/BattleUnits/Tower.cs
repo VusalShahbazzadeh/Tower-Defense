@@ -1,24 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using System.Linq;
 
 public class Tower : BattleUnit
 {
-    [SerializeField]
-    float FireRate;//Time which is waited inbetween firing
+    public float FireRate;//Time which is waited inbetween firing
     private void Start()
     {
-        StartTower();
-        GameManager.OnGameOver += StopTower;
+        StartCoroutine(workOfTower());
+        GetComponent<Button>().onClick.AddListener(ShowOptions) ;
     }
-
-
-    IEnumerator WorkOfTower; //variable to hold coroutine to stop it when needed
-
-    public void StartTower() => StartCoroutine(WorkOfTower = workOfTower());
-
-    public void StopTower() => StopCoroutine(WorkOfTower);
 
     IEnumerator workOfTower()
     {
@@ -27,7 +20,6 @@ public class Tower : BattleUnit
         position -= Vector3.forward * position.z;
         while (true)
         {
-            Debug.Log("Here");
             //Finding enemie which is enough close to trigger tower
             Enemy temp = BattleManagement.Enemies.Find(e => {  return (e.transform.position - position).magnitude < TriggerDistance; });
             
@@ -36,9 +28,19 @@ public class Tower : BattleUnit
             {
                 BattleManagement.Attack(this, temp, out Reward);
                 ResourceManagement.Gold += Reward;
+                if (Reward > 0)
+                {
+                    BattleManagement.EnemiesKilled++;
+                }
                 yield return new WaitForSeconds(FireRate);
             }
             yield return null;
         }
+    }
+
+    private void ShowOptions()
+    {
+        TowerOptions.Instance.Tower = this;
+        TowerOptions.Instance.gameObject.SetActive(true);
     }
 }

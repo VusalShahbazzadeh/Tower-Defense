@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
@@ -11,12 +11,25 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     float SpawnRate;//Time which is waited inbetween spawning prefabs
     public static SpawnManager Instance;
-
+    [SerializeField]
+    GameObject[] BlankSpaces;
     private void Start()
     {
         Instance = this;
-        SpawnEnemies(10);
     }
+
+    public void StartWaves()
+    {
+        foreach (GameObject go in BlankSpaces)
+        {
+            if (go != null)
+            {
+                go.GetComponent<Button>().interactable = false;
+            }
+        }
+        WaveManager.StartNewWave();
+    }
+
     public void SpawnEnemies(int NumberOfEnemies) => StartCoroutine(SpawnEnemiesCor(NumberOfEnemies));
 
     public IEnumerator SpawnEnemiesCor(int NumberOfEnemies)
