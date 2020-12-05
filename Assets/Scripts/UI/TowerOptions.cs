@@ -16,7 +16,7 @@ public class TowerOptions : MonoBehaviour
     [SerializeField]
     GameObject YouDontHaveEnoughGold;
 
-    public static List<Tower> Towers = new List<Tower>();
+    public static List<Tower> Towers;
     public static TowerOptions Instance;
 
     private void OnEnable()

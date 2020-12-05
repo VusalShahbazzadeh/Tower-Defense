@@ -16,8 +16,10 @@ public class BlankSpace : MonoBehaviour
     {
         //TowerOptions are made singleton
         //It can't be done in TowerOptions class itself as in the start it is disabled
-        if(TowerOptions.Instance == null)
+        if (TowerOptions.Instance == null)
             TowerOptions.Instance = TowerOptions;
+        //Static list of towers are refreshed
+        TowerOptions.Towers = new List<Tower>();
     }
 
     //When a new tower is requested
